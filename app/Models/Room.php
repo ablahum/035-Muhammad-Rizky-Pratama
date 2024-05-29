@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Room extends Model
 {
     use HasFactory;
 
-    protected $guarded = ["id"];
-
     public $timestamps = false;
-
-    public function role(): BelongsTo {
-        return $this->belongsTo(Role::class);
+    
+    public function category(): BelongsTo {
+        return $this->belongsTo(Category::class);
     }
 }

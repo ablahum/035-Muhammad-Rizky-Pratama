@@ -1,39 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  @vite('resources/css/app.css')
-  <title>Sign In</title>
-</head>
-<body>
-  <div class="h-[100vh] flex items-center justify-center bg-sign-page bg-cover bg-left">
-    <div class="md:w-2/3 lg:w-1/3 w-11/12 bg-card rounded-xl shadow-xl md:p-8 p-4">
-      <div class="mb-4 text-center">
-        <h3 class="font-bold uppercase text-2xl">sign in</h3>
-        
-        <p class="font-semibold mt-2"><span class="capitalize">please </span>login to continue</p>
-      </div>
+@extends('layouts/sign')
 
-      <form class="mb-4">
-        <div class="mb-4">
-          <label for="email" class="block mb-2"><span class="capitalize">email </span>address:</label>
-
-          <input type="email" id="email" class="border border-gray-300 rounded-lg w-full p-2" placeholder="Your email..." required />
-        </div> 
-
-        <div class="mb-4">
-          <label for="password" class="block mb-2 capitalize">password:</label>
-
-          <input type="password" id="password" class="border border-gray-300 rounded-lg w-full p-2" placeholder="Your password..." required />
-        </div> 
-        
-        <button type="submit" class="tracking-widest text-white bg-primary font-semibold rounded-lg w-full px-4 py-2 text-center uppercase">login</button>
-      </form>
-
-      <p class="text-center"><span class="capitalize">don't </span>have an account? <a href="/register" class="capitalize text-primary font-semibold">register </a>now</p>
+@section('content')
+  <div class="md:w-2/3 lg:w-1/2 w-11/12 bg-white rounded-xl shadow-xl p-8">
+    <div class="mb-4 text-center">
+      <h3 class="font-bold uppercase text-2xl">login</h3>
+      
+      <p class="font-semibold mt-2"><span class="capitalize">please </span>login before continue</p>
     </div>
+
+    @if (session()->has('success_message'))
+    <div class="bg-green-300 py-2 px-4 rounded-lg mb-4">
+      <p class="font-semibold">{{ session('success_message') }}</p>
+    </div>
+    @endif
+
+    <form class="mb-4" action={{ route('user.login') }} method="POST">
+      @csrf
+      <div class="mb-4">
+        <label for="email" class="block mb-2"><span class="capitalize">email </span>address:</label>
+
+        <input type="email" name="email" id="email" class="text-black border @error('email') border-red-500 @enderror rounded-lg w-full p-2" placeholder="Your email..."  value="{{ old('email') }}"/>
+
+        @error('email')
+        <p class="text-red-500 font-semibold text-end">{{ $message }}</p>
+        @enderror
+      </div> 
+
+      <div class="mb-4">
+        <label for="password" class="block mb-2 capitalize">password:</label>
+
+        <input type="password" name="password" id="password" class="text-black border @error('password') border-red-500 @enderror rounded-lg w-full p-2" placeholder="Your password..." />
+
+        @error('password')
+        <p class="text-red-500 font-semibold text-end">{{ $message }}</p>
+        @enderror
+      </div>
+      
+      @if (session()->has('failed_message'))
+      <div class="bg-red-500 py-2 px-4 rounded-lg mb-4">
+        <p class="font-semibold text-white">{{ session('failed_message') }}</p>
+      </div>
+      @endif
+      
+      <button type="submit" class="tracking-widest text-white bg-indigo-700 font-semibold rounded-lg w-full px-4 py-2 text-center uppercase">login</button>
+    </form>
+
+    <p class="text-center"><span class="capitalize">don't </span>have an account? <a href="/register" class="capitalize text-indigo-700 font-semibold">register </a>now</p>
   </div>
-</body>
-</html>
+@endsection
