@@ -49,7 +49,7 @@
             <li>
               <input type="radio" id={{ $role->name }} name="role_id" value={{ $role->id }} class="hidden peer" />
               
-              <label for={{ $role->name }} class="py-1 px-4 uppercase bg-white border @error('role_id') border-red-500 @enderror {{ $role->id ==  1 ? 'rounded-l-lg' : 'rounded-r-lg'  }} cursor-pointer peer-checked:bg-indigo-700 peer-checked:text-white">{{ $role->name }}</label>
+              <label for={{ $role->name }} class="py-1 px-4 uppercase bg-white border @error('role_id') border-red-500 @enderror {{ $role->id ===  1 ? 'rounded-l-lg' : 'rounded-r-lg'  }} cursor-pointer peer-checked:bg-indigo-700 peer-checked:text-white">{{ $role->name }}</label>
             </li>
             @endforeach
           </ul>

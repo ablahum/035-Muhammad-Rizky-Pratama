@@ -6,18 +6,19 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UserSeeder extends Seeder
+class OrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            'name' => "ablahum",
-            'email' => "ablahum@gmail.com",
-            'password' => "ablahum123",
-            'role_id' => 1,
+        DB::table('orders')->insert([
+            'guest_id' => 2,
+            'room_id' => 2,
+            'start_date' => '2024-05-30',
+            'end_date' => '2024-06-02',
+            'total_price' => 1050000
         ]);
     }
 }

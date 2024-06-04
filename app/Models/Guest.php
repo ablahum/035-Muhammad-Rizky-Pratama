@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Guest extends Model
 {
     use HasFactory;
 
     protected $guarded = ["id"];
     
     public $timestamps = false;
-    
-    public function user(): HasMany {
-        return $this->hasMany(User::class);
+
+    public function order(): HasMany {
+        return $this->hasMany(Order::class);
     }
 }

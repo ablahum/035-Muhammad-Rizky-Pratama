@@ -9,7 +9,7 @@ use App\Models\Role;
 use App\Models\User;
 
 class AuthController extends Controller {
-    public function index(Request $request) {
+    public function index(Request $request) {        
         $routeName = $request->route()->getName();
 
         if ($routeName == 'login') {
@@ -23,23 +23,25 @@ class AuthController extends Controller {
             return abort(404);
         }
     }
-    
-    public function login(Request $request) {       
+
+    public function login(Request $request) {
         $data = $request->validate([
             'email' => 'required|string|email:dns',
             'password' => 'required|string',
         ]);
 
         $user = User::where('email', $data['email'])->first();
-        
+
         if ($user) {
             if (Hash::check($data['password'], $user->password)) {
                 if (Auth::attempt($data)) {
                     $request->session()->regenerate();
+                    $request->session()->put('is_logged', true);
+                    $request->session()->put('user', $user);
 
-                    return redirect()->intended('/');
+                    return redirect()->intended('/orders');
                 }
-                
+
                 return back()->with('failed_message', 'Login failed. Please try again.');
             } else {
                 return back()->with('failed_message', 'Email or password is incorrect.');
@@ -49,6 +51,12 @@ class AuthController extends Controller {
         }
     }
 
+    public function logout() {
+        session()->flush();
+
+        return redirect('/login');
+    }
+    
     public function register(Request $request) {
         $data = $request->validate([
             'name' => 'required|string|max:255',
