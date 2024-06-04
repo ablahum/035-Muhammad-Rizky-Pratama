@@ -10,8 +10,14 @@ class Room extends Model
 {
     use HasFactory;
 
+    protected $guarded = ["id"];
+
     public $timestamps = false;
     
+    public function room(): HasOne {
+        return $this->hasOne(Order::class);
+    }
+
     public function category(): BelongsTo {
         return $this->belongsTo(Category::class);
     }
